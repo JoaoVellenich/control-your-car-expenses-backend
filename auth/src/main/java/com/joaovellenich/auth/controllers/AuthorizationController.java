@@ -1,7 +1,9 @@
 package com.joaovellenich.auth.controllers;
 
 import com.joaovellenich.auth.domain.user.UserEntity;
+import com.joaovellenich.auth.domain.user.UserRole;
 import com.joaovellenich.auth.domain.user.dto.AuthorizationUserDTO;
+import com.joaovellenich.auth.domain.user.dto.PublicRegisterUserDTO;
 import com.joaovellenich.auth.domain.user.dto.RegisterUserDTO;
 import com.joaovellenich.auth.domain.user.dto.TokenDTO;
 import com.joaovellenich.auth.infra.security.TokenService;
@@ -36,14 +38,14 @@ public class AuthorizationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody RegisterUserDTO data){
+    public ResponseEntity register(@RequestBody PublicRegisterUserDTO data){
         if(this.userRepository.findByEmail(data.email())!=null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         UserEntity user = UserEntity.builder()
                 .email(data.email())
                 .name(data.name())
-                .role(data.role())
+                .role(UserRole.USER)
                 .password(encryptedPassword)
                 .build();
 
