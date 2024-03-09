@@ -27,6 +27,7 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/cars/").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/cars/").authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
