@@ -1,6 +1,5 @@
-package com.joaovellenich.cars.modules.cars.entities;
+package com.joaovellenich.cars.infra.persistence.entity;
 
-import com.joaovellenich.cars.modules.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,7 @@
-package com.joaovellenich.cars.modules.user.entity;
+package com.joaovellenich.cars.infra.persistence.entity;
 
 
+import com.joaovellenich.cars.domain.UserRole;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

@@ -1,6 +1,6 @@
-package com.joaovellenich.cars.modules.user.repositories;
+package com.joaovellenich.cars.infra.persistence.repositories;
 
-import com.joaovellenich.cars.modules.user.entity.UserEntity;
+import com.joaovellenich.cars.infra.persistence.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.joaovellenich.cars.modules.user.entity;
+package com.joaovellenich.cars.domain;
 
 public enum UserRole {
     ADMIN("admin"),

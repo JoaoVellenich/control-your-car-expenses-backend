@@ -1,6 +1,6 @@
 package com.joaovellenich.cars.infra.security;
 
-import com.joaovellenich.cars.modules.user.repositories.UserRepository;
+import com.joaovellenich.cars.infra.persistence.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
