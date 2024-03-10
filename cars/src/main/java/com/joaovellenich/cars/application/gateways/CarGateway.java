@@ -8,4 +8,6 @@ import java.util.UUID;
 public interface CarGateway {
     public Car createCar(Car car);
     public List<Car> getCarByOwnerId(UUID ownerId);
+    public Car getCarById(UUID carId);
+    public void deleteCar(UUID carId);
 }
