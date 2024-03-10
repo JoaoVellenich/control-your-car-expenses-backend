@@ -10,4 +10,5 @@ public interface CarGateway {
     public List<Car> getCarByOwnerId(UUID ownerId);
     public Car getCarById(UUID carId);
     public void deleteCar(UUID carId);
+    public Car updatedCar(Car updatedCar);
 }
