@@ -46,4 +46,19 @@ public class CarRepositoryGateway implements CarGateway {
     public void deleteCar(UUID carId) {
         this.carRepository.deleteById(carId);
     }
+
+    @Override
+    public Car updatedCar(Car updatedCar) {
+        Optional<CarEntity> carRepo = this.carRepository.findById(updatedCar.id());
+        if(carRepo.isEmpty()){
+            return null;
+        }
+        CarEntity carToUpdate = carRepo.get();
+        carToUpdate.setBrand(updatedCar.brand());
+        carToUpdate.setKm(updatedCar.km());
+        carToUpdate.setModel(updatedCar.model());
+        carToUpdate.setYear(updatedCar.year());
+        CarEntity finishedCar = this.carRepository.save(carToUpdate);
+        return this.carEntityMapper.toDomain(finishedCar);
+    }
 }
