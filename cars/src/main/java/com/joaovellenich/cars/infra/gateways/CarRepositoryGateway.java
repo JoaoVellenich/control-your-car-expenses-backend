@@ -7,6 +7,7 @@ import com.joaovellenich.cars.infra.persistence.mapper.CarEntityMapper;
 import com.joaovellenich.cars.infra.persistence.repositories.CarRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -30,5 +31,19 @@ public class CarRepositoryGateway implements CarGateway {
         List<CarEntity> carsEntity = this.carRepository.findByOwnerId(ownerId);
         List<Car> carsDomain = carsEntity.stream().map(carEntityMapper::toDomain).toList();
         return carsDomain;
+    }
+
+    @Override
+    public Car getCarById(UUID carId) {
+        Optional<CarEntity> carEntity = this.carRepository.findById(carId);
+        if(carEntity.isEmpty())
+            return null;
+        Car carDomain = this.carEntityMapper.toDomain(carEntity.get());
+        return carDomain;
+    }
+
+    @Override
+    public void deleteCar(UUID carId) {
+        this.carRepository.deleteById(carId);
     }
 }
