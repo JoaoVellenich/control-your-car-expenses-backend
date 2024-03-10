@@ -2,6 +2,7 @@ package com.joaovellenich.cars.main;
 
 import com.joaovellenich.cars.application.gateways.CarGateway;
 import com.joaovellenich.cars.application.usecases.CreateCarUseCase;
+import com.joaovellenich.cars.application.usecases.DeleteCarUseCase;
 import com.joaovellenich.cars.application.usecases.GetCarByOwnerIdUseCase;
 import com.joaovellenich.cars.dto.createcarDTO.CreateCarDTOMapper;
 import com.joaovellenich.cars.dto.getcarsDTO.GetCarsDTOMapper;
@@ -20,6 +21,10 @@ public class CarConfig {
 
     @Bean
     public GetCarByOwnerIdUseCase getCarByOwnerIdUseCase(CarGateway carGateway){return new GetCarByOwnerIdUseCase(carGateway);}
+    @Bean
+    public DeleteCarUseCase deleteCarUseCase(CarGateway carGateway){
+        return new DeleteCarUseCase(carGateway);
+    }
     @Bean
     public CarGateway carGateway(CarRepository carRepository, CarEntityMapper carEntityMapper){
         return new CarRepositoryGateway(carRepository, carEntityMapper);
