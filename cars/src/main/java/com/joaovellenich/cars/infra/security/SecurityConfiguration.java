@@ -30,6 +30,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/cars/").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/cars/{carId}").authenticated()
                         .requestMatchers(HttpMethod.PATCH, "/cars/").authenticated()
+                        .requestMatchers(HttpMethod.PATCH, "/cars/updateKm").authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
