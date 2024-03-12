@@ -1,10 +1,7 @@
 package com.joaovellenich.cars.infra.controllers;
 
 
-import com.joaovellenich.cars.application.usecases.CreateCarUseCase;
-import com.joaovellenich.cars.application.usecases.DeleteCarUseCase;
-import com.joaovellenich.cars.application.usecases.GetCarByOwnerIdUseCase;
-import com.joaovellenich.cars.application.usecases.UpdateCarUseCase;
+import com.joaovellenich.cars.application.usecases.*;
 import com.joaovellenich.cars.domain.Car;
 import com.joaovellenich.cars.dto.createcarDTO.CreateCarDTOMapper;
 import com.joaovellenich.cars.dto.createcarDTO.CreateCarRequest;
@@ -13,13 +10,13 @@ import com.joaovellenich.cars.dto.getcarsDTO.GetCarsDTOMapper;
 import com.joaovellenich.cars.dto.updatecarDTO.UpdateCarDTOMapper;
 import com.joaovellenich.cars.dto.updatecarDTO.UpdateCarRequest;
 import com.joaovellenich.cars.dto.updatecarDTO.UpdateCarResponse;
+import com.joaovellenich.cars.dto.updatekmDTO.UpdateKmRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -33,6 +30,7 @@ public class CarController {
     private final DeleteCarUseCase deleteCarUseCase;
     private final UpdateCarUseCase updateCarUseCase;
     private final UpdateCarDTOMapper updateCarDTOMapper;
+    private final UpdateCarKmUseCase updateCarKmUseCase;
     public CarController(
             CreateCarUseCase createCarUseCase,
             CreateCarDTOMapper createCarDTOMapper,
@@ -40,7 +38,8 @@ public class CarController {
             GetCarsDTOMapper getCarsDTOMapper,
             DeleteCarUseCase deleteCarUseCase,
             UpdateCarUseCase updateCarUseCase,
-            UpdateCarDTOMapper updateCarDTOMapper
+            UpdateCarDTOMapper updateCarDTOMapper,
+            UpdateCarKmUseCase updateCarKmUseCase
     ){
         this.createCarUseCase = createCarUseCase;
         this.createCarDTOMapper = createCarDTOMapper;
@@ -49,6 +48,7 @@ public class CarController {
         this.deleteCarUseCase = deleteCarUseCase;
         this.updateCarUseCase = updateCarUseCase;
         this.updateCarDTOMapper = updateCarDTOMapper;
+        this.updateCarKmUseCase = updateCarKmUseCase;
     }
     @PostMapping("/")
     public ResponseEntity<CreateCarResponse> createCar(@RequestBody CreateCarRequest request){
@@ -105,6 +105,20 @@ public class CarController {
         }catch (Exception error){
             logger.error("Error updateCar - Error - " + error);
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PatchMapping("/updateKm")
+    public ResponseEntity updateCarKm(@RequestBody UpdateKmRequest request){
+        try {
+            logger.info("Start updateCarKm - Request - " + request);
+            UUID ownerId = this.getCarsDTOMapper.getOwnerUUID();
+            Car updatedCar = this.updateCarKmUseCase.UpdateCarKm(request.carId(), ownerId, request.km());
+            logger.info("Finished updateCarKm - Response - " + updatedCar);
+            return ResponseEntity.ok().body(updatedCar);
+        }catch (Exception error){
+            logger.error("Error updateCarKm - " + error);
+            return ResponseEntity.badRequest().body(error);
         }
     }
 }
