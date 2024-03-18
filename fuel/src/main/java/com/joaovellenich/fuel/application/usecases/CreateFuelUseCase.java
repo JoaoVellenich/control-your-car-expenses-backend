@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CreateFuelUseCase {
-    private static Logger logger = LoggerFactory.getLogger(CreateFuelUseCase.class);
+    private final static Logger logger = LoggerFactory.getLogger(CreateFuelUseCase.class);
     private final FuelGateway fuelGateway;
     public CreateFuelUseCase(FuelGateway fuelGateway){
         this.fuelGateway = fuelGateway;
