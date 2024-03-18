@@ -4,7 +4,7 @@ import com.joaovellenich.fuel.domain.Fuel;
 import com.joaovellenich.fuel.infra.persistence.entity.FuelEntity;
 
 public class FuelEntityMapper {
-    private FuelEntity toEntity(Fuel fuelDomain){
+    public FuelEntity toEntity(Fuel fuelDomain){
         return FuelEntity.builder()
                 .date(fuelDomain.date())
                 .total_price(fuelDomain.total_price())
@@ -15,7 +15,7 @@ public class FuelEntityMapper {
                 .carId(fuelDomain.carId())
                 .build();
     }
-    private Fuel toDomain(FuelEntity fuelEntity){
+    public Fuel toDomain(FuelEntity fuelEntity){
         return  Fuel.builder()
                 .id(fuelEntity.getId())
                 .date(fuelEntity.getDate())
