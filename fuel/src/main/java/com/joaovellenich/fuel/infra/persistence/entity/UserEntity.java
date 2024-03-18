@@ -27,7 +27,6 @@ public class UserEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
-
     private String email;
     private String password;
     private UserRole role;
