@@ -4,6 +4,7 @@ import com.joaovellenich.fuel.application.usecases.CreateFuelUseCase;
 import com.joaovellenich.fuel.domain.Fuel;
 import com.joaovellenich.fuel.dto.createfuelDTO.CreateFuelDTOMapper;
 import com.joaovellenich.fuel.dto.createfuelDTO.CreateFuelRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +29,18 @@ public class FuelController {
     }
 
     @PostMapping("/")
-    public ResponseEntity createFuel(@RequestBody CreateFuelRequest request){
-        logger.info("Start createFuel route - Request - "+ request);
-        Fuel fuel = this.ceCreateFuelDTOMapper.toFuel(request);
-        Fuel savedFuel = this.createFuelUseCase.createFuel(fuel);
-        logger.info("Finished createFuel route - Response - " + savedFuel);
-        return ResponseEntity.ok().body(savedFuel);
+    public ResponseEntity createFuel(@RequestBody CreateFuelRequest fuel, HttpServletRequest servletRequest){
+        try{
+            logger.info("Start createFuel route - Request - "+ fuel);
+            Fuel fuelDomain = this.ceCreateFuelDTOMapper.toFuel(fuel);
+            String token = servletRequest.getHeader("Authorization").split("Bearer")[1];
+            Fuel savedFuel = this.createFuelUseCase.createFuel(fuelDomain, token);
+            logger.info("Finished createFuel route - Response - " + savedFuel);
+            return ResponseEntity.ok().body(savedFuel);
+        }catch (Exception error){
+            logger.error("Error createFuel route - Error - " + error.getMessage());
+            return ResponseEntity.badRequest().body(error.getMessage());
+        }
     }
 
 
