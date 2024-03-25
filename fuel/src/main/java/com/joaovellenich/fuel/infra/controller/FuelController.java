@@ -1,6 +1,7 @@
 package com.joaovellenich.fuel.infra.controller;
 
 import com.joaovellenich.fuel.application.usecases.CreateFuelUseCase;
+import com.joaovellenich.fuel.application.usecases.GetAllFuelUseCase;
 import com.joaovellenich.fuel.domain.Fuel;
 import com.joaovellenich.fuel.dto.createfuelDTO.CreateFuelDTOMapper;
 import com.joaovellenich.fuel.dto.createfuelDTO.CreateFuelRequest;
@@ -8,10 +9,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/fuel")
@@ -20,12 +21,16 @@ public class FuelController {
 
     private final CreateFuelUseCase createFuelUseCase;
     private final CreateFuelDTOMapper ceCreateFuelDTOMapper;
+
+    private final GetAllFuelUseCase getAllFuelUseCase;
     public FuelController(
             CreateFuelUseCase createFuelUseCase,
-            CreateFuelDTOMapper ceCreateFuelDTOMapper
+            CreateFuelDTOMapper ceCreateFuelDTOMapper,
+            GetAllFuelUseCase getAllFuelUseCase
     ){
         this.createFuelUseCase = createFuelUseCase;
         this.ceCreateFuelDTOMapper = ceCreateFuelDTOMapper;
+        this.getAllFuelUseCase = getAllFuelUseCase;
     }
 
     @PostMapping("/")
@@ -43,5 +48,12 @@ public class FuelController {
         }
     }
 
+    @GetMapping("/{carId}")
+    public ResponseEntity getAllFuel(@PathVariable UUID carId) {
+        logger.info("Start getAllFuel route - Request - " + carId);
+        List<Fuel> fuel = this.getAllFuelUseCase.getAllFuel(carId);
+        logger.info("Finished getAllUsers - Response - " + fuel);
+        return ResponseEntity.ok().body(fuel);
+    }
 
 }
