@@ -3,8 +3,10 @@ package com.joaovellenich.fuel.main;
 import com.joaovellenich.fuel.application.gateways.CarGateway;
 import com.joaovellenich.fuel.application.gateways.FuelGateway;
 import com.joaovellenich.fuel.application.usecases.CreateFuelUseCase;
+import com.joaovellenich.fuel.application.usecases.EditFuelUseCase;
 import com.joaovellenich.fuel.application.usecases.GetAllFuelUseCase;
 import com.joaovellenich.fuel.dto.createfuelDTO.CreateFuelDTOMapper;
+import com.joaovellenich.fuel.dto.updatefuelDTO.UpdateFuelDTOMapper;
 import com.joaovellenich.fuel.infra.gateways.CarRepositoryGateway;
 import com.joaovellenich.fuel.infra.gateways.FuelRepositoryGateway;
 import com.joaovellenich.fuel.infra.persistence.mapper.FuelEntityMapper;
@@ -24,6 +26,10 @@ public class FuelConfig {
         return new GetAllFuelUseCase(fuelGateway);
     }
     @Bean
+    public EditFuelUseCase editFuelUseCase(FuelGateway fuelGateway){
+        return new EditFuelUseCase(fuelGateway);
+    }
+    @Bean
     public FuelGateway fuelGateway(FuelRepository fuelRepository, FuelEntityMapper fuelEntityMapper){
         return new FuelRepositoryGateway(fuelRepository, fuelEntityMapper);
     }
@@ -39,4 +45,6 @@ public class FuelConfig {
     public CreateFuelDTOMapper createFuelDTOMapper(){
         return new CreateFuelDTOMapper();
     }
+    @Bean
+    public UpdateFuelDTOMapper updateFuelDTOMapper(){return new UpdateFuelDTOMapper();}
 }
