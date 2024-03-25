@@ -17,7 +17,6 @@ public class CarConfig {
     public CreateCarUseCase createCarUseCase(CarGateway carGateway){
         return new CreateCarUseCase(carGateway);
     }
-
     @Bean
     public GetCarByOwnerIdUseCase getCarByOwnerIdUseCase(CarGateway carGateway){return new GetCarByOwnerIdUseCase(carGateway);}
     @Bean
